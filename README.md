@@ -4,24 +4,44 @@ node.js prompt module for asking the same questions different ways
 
 ## overview
 
-This document refers to the [prompt.js](https://github.com/appcelerator/appc-cli/blob/CLI-327/lib/prompt.js) module in appc-cli. It aims to provide an identical API for interactive prompting that works for both CLI input and data delivered via socket.
+`interrogate` aims to provide an identical API for interactive prompting that works for both CLI input and data delivered via socket.
 
-The module exposes a single function `prompt(questions, opts, callback)`. It's job is to deliver a series of questions to a user, allow the user to answer those questions, do any necessary processing on those answers (validation, filtering, etc...), and then pass those answers back to the program that invoked `prompt()`. The below sections details how this API can be used for both CLI input processing, as well as input delivered via socket communications. 
+## interrogate(questions, opts, callback)
 
-## CLI prompting
-
-When using `prompt.js` to get input from the CLI, it is simply a thin wrapper over [inquirer.js][]. The API can be used identically to the documentation listed on the inquirer.js site, with a single exception. Instead of the `prompt()` function returning only an `answers` object to its callback, it now returns an `err` object and `answers` object. 
+* `questions` - array of [questions objects](), as defined in the inquirer.js documentation
+* `opts` - optional object for passing options to the `interrogate()` call
+* `callback` - function executed upon completion. It receives the following parameters:
+	* `err` - error object, if there was an error, falsy otherwise
+	* `answers` - object containing the key/value pairs of question name and answer
 
 ```js
-prompt([{ 
+interrogate([{ 
   name: 'myField', 
   type: 'input' 
 }], function(err, answers) {
-  /* check err, do something with answers */
+	if (err) { /* do error handling */ }
+  console.log('The answer to question "myField" is ' + answers.myField);
 });
+```
+
+It's job is to deliver a series of questions to a user, allow the user to answer those questions, do any necessary processing on those answers (validation, filtering, etc...), and then pass those answers back to the program that invoked `interrogate()`. The below sections details how this API can be used for both CLI input processing, as well as input delivered via socket communications. 
+
+## CLI prompting
+
+When using `interrogate` to get input from the CLI, it is simply a thin wrapper over [inquirer.js][]. The API can be used identically to the documentation listed on the inquirer.js site, with a single exception. In the inquirer.js API, `prompt()` returns only an `answers` object to its callback. The `interrogate()` function instead returns an `err` object and `answers` object to tis callback. 
+
+```js
+interrogate([{ 
+  name: 'myField', 
+  type: 'input' 
+}], function(err, answers) {
+	if (err) { /* do error handling */ }
+  console.log('The answer to question "myField" is ' + answers.myField);
+});
+```
 ``` 
 
-Other than this above change, all other usage for CLI input processing is identical to inquirer.js and there's no sense in repeating it here.
+Other than this above change, all other usage for CLI input processing is identical to inquirer.js and there's no sense in repeating it here. Please refer to the [inquirer.js][] docs for any further details.
 
 ## socket-based prompting
 
@@ -29,16 +49,23 @@ Other than this above change, all other usage for CLI input processing is identi
 
 ### client-side
 
-As noted above in the [CLI prompting](#cli-prompting) section, [inquirer.js][] is the foundation for this API. On the client-side, it is invoked and fed data back just like the inquirer.js API. To tell prompt.js to use the socket interface rather than the default CLI interface, you'd do the following:
+As noted above in the [CLI prompting](#cli-prompting) section, [inquirer.js][] is the foundation for this API. On the client-side, it is invoked and fed data back just like the inquirer.js API. To tell `interrogate` to use the socket interface rather than the default CLI interface, you'd do the following:
 
 ```js
+// just like in the CLI case 
 var questions = [{ name: 'myField', type: 'input' }];
+
+// we give it options to indicate we're using socket prompting,
+// and that we want to specify a port for the communication
 var opts = { 
   socket: true,
   port: 19191 // optional, uses 22212 by default
 };
-prompt(questions, opts, function(err, answers) {
-  /* check err, do something with answers */
+
+// prompt exactly as in the CLI case
+interrogate(questions, opts, function(err, answers) {
+  if (err) { /* do error handling */ }
+  console.log('The answer to question "myField" is ' + answers.myField);
 });
 ``` 
 
@@ -46,11 +73,11 @@ As far as how to create a list of questions and process the answers, refer to th
 
 ### server-side
 
-The server side requires a simple TCP server listening on an agreed upon port. As noted above, the default port for prompt.js is `22212`, but is configurable. Here is the flow for how the client-side sends a question to the the server and how the server sends back a response.
+The server side requires a simple TCP server listening on an agreed upon port. As noted above, the default port for `interrogate` is `22212`, but is configurable via `opts.port`. Here is the flow for how the client-side sends a question to the the server and how the server sends back a response.
 
 1. client connects to server on specified port
 2. client sends the server a [JSON question request](#question-request)
-3. server parses the JSON question request and renders the question in a suitable format (in the case of Appcelerator Studio, as a user-editable dialog)
+3. server parses the JSON question request and renders the question in a suitable format (in the case of Appcelerator Studio, as a user input dialog)
 4. server receives user input (an answer), `JSON.stringify()`'s the answer, then sends it back to the client
 5. client receives server response
     1. if client successfully parses and validates response, skip to step #8
@@ -64,7 +91,7 @@ The server side requires a simple TCP server listening on an agreed upon port. A
 
 #### question request
 
-Full details of the [inquirer question object](https://github.com/SBoudrias/Inquirer.js/) are in the inquirer.js documentation. This documentation should be used as a DSL for the server-side to render the questions. In the case of Appcelerator Studio, the properties and values in the question object will determine what text boxes, comboboxes, etc... will be used to query the user.
+Full details of the [inquirer question object](https://github.com/SBoudrias/Inquirer.js/#question) are in the inquirer.js documentation. This documentation should be used as a DSL for the server-side to render the questions. In the case of Appcelerator Studio, the properties and values in the question object will determine what text boxes, comboboxes, etc... will be used to query the user.
 
 ```js
 {
@@ -86,7 +113,7 @@ These error responses from the client back to the server are sent in 2 possible 
 
 The `question` object in this case is the original question that generated the error. It should be asked again by the server. 
 
-Full details of the [inquirer question object](https://github.com/SBoudrias/Inquirer.js/) are in the inquirer.js documentation. This documentation should be used as a DSL for the server-side to render the questions. In the case of Appcelerator Studio, the properties and values in the question object will determine what text boxes, comboboxes, etc... will be used to query the user.
+Full details of the [inquirer question object](https://github.com/SBoudrias/Inquirer.js/#question) are in the inquirer.js documentation. This documentation should be used as a DSL for the server-side to render the questions. In the case of Appcelerator Studio, the properties and values in the question object will determine what text boxes, comboboxes, etc... will be used to query the user.
 
 ```js
 {
