@@ -1,0 +1,38 @@
+{
+  "name": "interrogate",
+  "version": "0.0.0",
+  "description": "node.js prompt module for asking the same questions different ways",
+  "main": "interrogate.js",
+  "scripts": {
+    "test": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appcelerator/interrogate.git"
+  },
+  "keywords": [
+    "prompt",
+    "inquirer",
+    "inquirer.js",
+    "socket",
+    "input"
+  ],
+  "author": "Tony Lukasavage",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/appcelerator/interrogate/issues"
+  },
+  "homepage": "https://github.com/appcelerator/interrogate",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-kahvesi": "0.2.0-dev2",
+    "grunt-mocha-test": "^0.12.1",
+    "lodash": "^3.1.0",
+    "should": "^4.0.4"
+  },
+  "dependencies": {
+    "async": "^0.9.0",
+    "inquirer": "^0.8.0"
+  }
+}
