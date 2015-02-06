@@ -15,6 +15,8 @@ node.js prompt module for asking the same questions different ways
 	* `answers` - object containing the key/value pairs of question name and answer
 
 ```js
+var interrogate = require('interrogate');
+
 interrogate([{ 
   name: 'myField', 
   type: 'input' 
@@ -39,7 +41,6 @@ interrogate([{
   console.log('The answer to question "myField" is ' + answers.myField);
 });
 ```
-``` 
 
 Other than this above change, all other usage for CLI input processing is identical to inquirer.js and there's no sense in repeating it here. Please refer to the [inquirer.js][] docs for any further details.
 
