@@ -1,14 +1,14 @@
 {
-  "name": "interrogate",
+  "name": "appc-inquirer",
   "version": "0.0.0",
   "description": "node.js prompt module for asking the same questions different ways",
-  "main": "interrogate.js",
+  "main": "appc-inquirer.js",
   "scripts": {
     "test": "grunt"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/appcelerator/interrogate.git"
+    "url": "https://github.com/appcelerator/appc-inquirer.git"
   },
   "keywords": [
     "prompt",
@@ -20,9 +20,9 @@
   "author": "Tony Lukasavage",
   "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/appcelerator/interrogate/issues"
+    "url": "https://github.com/appcelerator/appc-inquirer/issues"
   },
-  "homepage": "https://github.com/appcelerator/interrogate",
+  "homepage": "https://github.com/appcelerator/appc-inquirer",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.10.0",

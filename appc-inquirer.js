@@ -2,9 +2,11 @@ var async = require('async'),
 	inquirer = require('inquirer'),
 	net = require('net');
 
-module.exports = prompt;
+module.exports = new AppcInquirer();
 
-function prompt(questions, opts, callback) {
+function AppcInquirer() {};
+
+AppcInquirer.prototype.prompt = function prompt(questions, opts, callback) {
 	callback = arguments[arguments.length-1];
 	if (!opts || isFunction(opts)) { opts = {}; }
 

@@ -1,23 +1,23 @@
-# interrogate
+# appc-inquirer
 
 node.js prompt module for asking the same questions different ways
 
 ## overview
 
-`interrogate` aims to provide an identical API for interactive prompting that works for both CLI input and data delivered via socket.
+`appc-inquirer` aims to provide an identical API for interactive prompting that works for both CLI input and data delivered via socket.
 
-## interrogate(questions, opts, callback)
+## prompt(questions, opts, callback)
 
 * `questions` - array of [questions objects](https://github.com/SBoudrias/Inquirer.js/#question), as defined in the inquirer.js documentation
-* `opts` - optional object for passing options to the `interrogate()` call
+* `opts` - optional object for passing options to the `prompt()` call
 * `callback` - function executed upon completion. It receives the following parameters:
 	* `err` - error object, if there was an error, falsy otherwise
 	* `answers` - object containing the key/value pairs of question name and answer
 
 ```js
-var interrogate = require('interrogate');
+var inquirer = require('appc-inquirer');
 
-interrogate([{ 
+inquirer.prompt([{ 
   name: 'myField', 
   type: 'input' 
 }], function(err, answers) {
@@ -26,14 +26,14 @@ interrogate([{
 });
 ```
 
-It's job is to deliver a series of questions to a user, allow the user to answer those questions, do any necessary processing on those answers (validation, filtering, etc...), and then pass those answers back to the program that invoked `interrogate()`. The below sections details how this API can be used for both CLI input processing, as well as input delivered via socket communications. 
+It's job is to deliver a series of questions to a user, allow the user to answer those questions, do any necessary processing on those answers (validation, filtering, etc...), and then pass those answers back to the program that invoked `prompt()`. The below sections details how this API can be used for both CLI input processing, as well as input delivered via socket communications. 
 
 ## CLI prompting
 
-When using `interrogate` to get input from the CLI, it is simply a thin wrapper over [inquirer.js][]. The API can be used identically to the documentation listed on the inquirer.js site, with a single exception. In the inquirer.js API, `prompt()` returns only an `answers` object to its callback. The `interrogate()` function instead returns an `err` object and `answers` object to tis callback. 
+When using `appc-inquirer` to get input from the CLI, it is simply a thin wrapper over [inquirer.js][]. The API can be used identically to the documentation listed on the inquirer.js site, with a single exception. In the inquirer.js API, `prompt()` returns only an `answers` object to its callback. The `prompt()` function in `appc-inquirer` instead returns an `err` object and `answers` object to tis callback. 
 
 ```js
-interrogate([{ 
+inquirer.prompt([{ 
   name: 'myField', 
   type: 'input' 
 }], function(err, answers) {
@@ -50,7 +50,7 @@ Other than this above change, all other usage for CLI input processing is identi
 
 ### client-side
 
-As noted above in the [CLI prompting](#cli-prompting) section, [inquirer.js][] is the foundation for this API. On the client-side, it is invoked and fed data back just like the inquirer.js API. To tell `interrogate` to use the socket interface rather than the default CLI interface, you'd do the following:
+As noted above in the [CLI prompting](#cli-prompting) section, [inquirer.js][] is the foundation for this API. On the client-side, it is invoked and fed data back just like the inquirer.js API. To tell `appc-inquirer` to use the socket interface rather than the default CLI interface, you'd do the following:
 
 ```js
 // just like in the CLI case 
@@ -64,7 +64,7 @@ var opts = {
 };
 
 // prompt exactly as in the CLI case
-interrogate(questions, opts, function(err, answers) {
+inquirer.prompt(questions, opts, function(err, answers) {
   if (err) { /* do error handling */ }
   console.log('The answer to question "myField" is ' + answers.myField);
 });
@@ -74,7 +74,7 @@ As far as how to create a list of questions and process the answers, refer to th
 
 ### server-side
 
-The server side requires a simple TCP server listening on an agreed upon port. As noted above, the default port for `interrogate` is `22212`, but is configurable via `opts.port`. Here is the flow for how the client-side sends a question to the the server and how the server sends back a response.
+The server side requires a simple TCP server listening on an agreed upon port. As noted above, the default port for `appc-inquirer` is `22212`, but is configurable via `opts.port`. Here is the flow for how the client-side sends a question to the the server and how the server sends back a response.
 
 1. client connects to server on specified port
 2. client sends the server a [JSON question request](#question-request)

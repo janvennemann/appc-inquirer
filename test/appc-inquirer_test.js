@@ -1,7 +1,7 @@
 var _ = require('lodash'), 
 	async = require('async'),
 	net = require('net'),
-	prompt = require('..'), 
+	inquirer = require('..'), 
 	should = require('should');
 
 var DEFAULT_PORT = 22212;
@@ -44,16 +44,16 @@ var LIST = {
 };
 var OMIT_PROPS = ['validate','filter','when','choices'];
 
-describe('prompt', function() {
+describe('appc-inquirer', function() {
 
 	it('exposes prompt()', function() {
-		should.exist(prompt);
-		prompt.should.be.a.Function;
+		should.exist(inquirer.prompt);
+		inquirer.prompt.should.be.a.Function;
 	});
 
 	it('gets user input via command line', function(done) {
 		var val = 'workit';
-		prompt([BASIC], function(err, answers) {
+		inquirer.prompt([BASIC], function(err, answers) {
 			should.not.exist(err);
 			answers.should.be.an.Object;
 			answers.basic.should.equal(val);
@@ -82,7 +82,7 @@ describe('prompt', function() {
 			});
 		});
 		server.listen(DEFAULT_PORT, function() {
-			prompt([BASIC], {socket:true}, function(err, answers) {
+			inquirer.prompt([BASIC], {socket:true}, function(err, answers) {
 				should.not.exist(err);
 				answers.should.be.an.Object;
 				answers.basic.should.equal(val);
@@ -108,7 +108,7 @@ describe('prompt', function() {
 			});
 		});
 		server.listen(DEFAULT_PORT, function() {
-			prompt(BASIC, {socket:true}, function(err, answers) {
+			inquirer.prompt(BASIC, {socket:true}, function(err, answers) {
 				should.not.exist(err);
 				answers.should.be.an.Object;
 				answers.basic.should.equal(val);
@@ -132,7 +132,7 @@ describe('prompt', function() {
 			});
 		});
 		server.listen(DEFAULT_PORT, function() {
-			prompt([COMPLEX], {socket:true}, function(err, answers) {
+			inquirer.prompt([COMPLEX], {socket:true}, function(err, answers) {
 				should.not.exist(err);
 				answers.should.be.an.Object;
 				answers.complex.should.equal('DEFAULTCOMPLEX');
@@ -151,7 +151,7 @@ describe('prompt', function() {
 			server.close();
 		});
 		server.listen(DEFAULT_PORT, function() {
-			prompt(question, {socket:true}, function(err, answers) {
+			inquirer.prompt(question, {socket:true}, function(err, answers) {
 				should.not.exist(err);
 				answers.should.be.an.Object;
 				answers.should.be.empty;
@@ -183,7 +183,7 @@ describe('prompt', function() {
 			});
 		});
 		server.listen(DEFAULT_PORT, function() {
-			prompt([LIST], {socket:true}, function(err, answers) {
+			inquirer.prompt([LIST], {socket:true}, function(err, answers) {
 				should.not.exist(err);
 				answers.should.be.an.Object;
 				answers.list.should.equal('answer2_value');
@@ -228,7 +228,7 @@ describe('prompt', function() {
 			});
 		});
 		server.listen(DEFAULT_PORT, function() {
-			prompt(BASIC, {socket:true}, function(err, answers) {
+			inquirer.prompt(BASIC, {socket:true}, function(err, answers) {
 				should.not.exist(err);
 				answers.should.be.an.Object;
 				answers.basic.should.equal(val);
@@ -277,7 +277,7 @@ describe('prompt', function() {
 			});
 		});
 		server.listen(DEFAULT_PORT, function() {
-			prompt(question, {socket:true}, function(err, answers) {
+			inquirer.prompt(question, {socket:true}, function(err, answers) {
 				should.not.exist(err);
 				answers.should.be.an.Object;
 				answers.basic.should.equal(val);
@@ -374,7 +374,7 @@ describe('prompt', function() {
 		});
 
 		server.listen(9374, function() {
-			prompt(questions, {socket:true, port:9374}, function(err, answers) {
+			inquirer.prompt(questions, {socket:true, port:9374}, function(err, answers) {
 				should.not.exist(err);
 				answers.should.be.an.Object;
 				answers.q1.should.equal('answer#1');
