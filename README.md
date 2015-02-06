@@ -8,7 +8,7 @@ node.js prompt module for asking the same questions different ways
 
 ## interrogate(questions, opts, callback)
 
-* `questions` - array of [questions objects](), as defined in the inquirer.js documentation
+* `questions` - array of [questions objects](https://github.com/SBoudrias/Inquirer.js/#question), as defined in the inquirer.js documentation
 * `opts` - optional object for passing options to the `interrogate()` call
 * `callback` - function executed upon completion. It receives the following parameters:
 	* `err` - error object, if there was an error, falsy otherwise
