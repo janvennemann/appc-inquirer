@@ -33,17 +33,19 @@ SocketPrompt.prototype.prompt = function(questions, callback) {
 	questions = !Array.isArray(questions) ? [questions] : questions;
 
 	var self = this;
-	var client = net.connect({ 
-		host: this.host,
-		port: this.port 
-	});
+	var client = new net.Socket();
 
 	async.waterfall([
 
 		// set up handlers for socket
 		function(cb) {
-			client.on('error', callback);
 			client.on('connect', cb);
+			client.on('error', callback);
+
+			client.connect({
+				host: self.host,
+				port: self.port
+			});
 		},
 
 		// send question, receive answer
