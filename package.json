@@ -19,7 +19,9 @@
     "inquirer",
     "inquirer.js",
     "socket",
-    "input"
+    "input",
+    "appc-client",
+    "appc-jira-cli"
   ],
   "author": "Tony Lukasavage",
   "license": "Apache 2.0",
