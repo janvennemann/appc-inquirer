@@ -12,9 +12,9 @@ module.exports = function(grunt) {
 			},
 			src: tests
 		},
-		jshint: {
+		appcJs: {
 			options: {
-				jshintrc: true
+				force: true
 			},
 			src: ['interrogate.js', 'test/**/*.js']
 		},
@@ -23,11 +23,11 @@ module.exports = function(grunt) {
 
 	// Load grunt plugins for modules
 	grunt.loadNpmTasks('grunt-mocha-test');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-appc-js');
 	grunt.loadNpmTasks('grunt-kahvesi');
 
 	// register tasks
 	grunt.registerTask('cover', ['kahvesi']);
-	grunt.registerTask('default', ['jshint', 'mochaTest']);
+	grunt.registerTask('default', ['appcJs', 'mochaTest']);
 
 };
