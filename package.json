@@ -4,7 +4,7 @@
   "description": "node.js prompt module for asking the same questions different ways",
   "main": "appc-inquirer.js",
   "files": [
-    "appc-inquirer.js", 
+    "appc-inquirer.js",
     "LICENSE"
   ],
   "scripts": {
@@ -39,6 +39,6 @@
   },
   "dependencies": {
     "async": "^0.9.0",
-    "inquirer": "^0.8.0"
+    "inquirer": "git://github.com/sboudrias/inquirer.js"
   }
 }
