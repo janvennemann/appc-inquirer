@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 		},
 		appcJs: {
 			options: {
-				force: true
+				force: false
 			},
 			src: ['interrogate.js', 'test/**/*.js']
 		},
