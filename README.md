@@ -1,4 +1,4 @@
-# appc-inquirer
+# Appcelerator Inquirer
 
 > node.js prompt module for asking the same questions different ways
 
