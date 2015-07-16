@@ -3,11 +3,3 @@ sudo: false
 node_js:
 - '0.10'
 - '0.12'
-deploy:
-  provider: npm
-  email: npmjs@appcelerator.com
-  api_key:
-    secure: P3UcWtig5XR4lmoeJ6B7/g7wkR2Rr0CVYq/iAliLAca1IsttYcVD/zGnSrK463dZlg1cjYzLZnR0mtmD+UHnnu6Rj1U0Ltp4UAA4sOd+Iw8wDkacm3AE70eA8WE03u7tOciBz4E2lfpObpPAFMyaBIgeml882fMQGb536cV8sBs=
-  on:
-    tags: true
-    repo: appcelerator/appc-inquirer
