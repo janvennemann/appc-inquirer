@@ -24,12 +24,13 @@
     "appc-jira-cli"
   ],
   "author": "Tony Lukasavage",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/appcelerator/appc-inquirer/issues"
   },
   "homepage": "https://github.com/appcelerator/appc-inquirer",
   "devDependencies": {
+    "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-appc-js": "*",
     "grunt-kahvesi": "0.2.0-dev2",
