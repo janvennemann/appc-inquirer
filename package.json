@@ -1,6 +1,6 @@
 {
   "name": "appc-inquirer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "node.js prompt module for asking the same questions different ways",
   "main": "appc-inquirer.js",
   "files": [
@@ -33,13 +33,13 @@
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-appc-js": "*",
-    "grunt-kahvesi": "0.2.0-dev2",
+    "grunt-kahvesi": "~0.2.4",
     "grunt-mocha-test": "^0.12.1",
     "lodash": "^3.1.0",
-    "should": "^4.0.4"
+    "should": "^7.0.2"
   },
   "dependencies": {
-    "async": "^0.9.0",
-    "inquirer": "^0.8.0"
+    "async": "^1.4.0",
+    "inquirer": "^0.9.0"
   }
 }
