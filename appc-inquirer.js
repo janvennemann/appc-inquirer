@@ -10,14 +10,14 @@ AppcInquirer.prototype.prompt = function prompt(questions, opts, callback) {
 	callback = arguments[arguments.length-1];
 	if (!opts || isFunction(opts)) { opts = {}; }
 
-	// ask our questions over a socket 
+	// ask our questions over a socket
 	if (opts.socket) {
 		return new SocketPrompt(opts).prompt(questions, callback);
-	} 
+	}
 
 	// have inquirer handle questions via stdio
 	else {
-		return inquirer.prompt(questions, function(answers) {
+		return inquirer.prompt(questions).then(function(answers) {
 			return callback(null, answers);
 		});
 	}
@@ -84,7 +84,7 @@ function singleQuestions(client, questions, callback) {
 			client.once('data', function(answer) {
 				// make sure we got JSON back
 				try {
-					answer = JSON.parse(answer);	
+					answer = JSON.parse(answer);
 				} catch (e) {
 					client.write(JSON.stringify({
 						type: 'error',
@@ -127,11 +127,11 @@ function singleQuestions(client, questions, callback) {
 function bundleQuestions(client, questions, callback) {
 	var answers = {},
 		bundles = [];
-	
+
 	// create question bundles
 	questions.forEach(function(q, index) {
-		if (isFunction(q.when) || isFunction(q.message) || isFunction(q.default) || 
-			isFunction(q.choices) || index === 0) 
+		if (isFunction(q.when) || isFunction(q.message) || isFunction(q.default) ||
+			isFunction(q.choices) || index === 0)
 		{
 			bundles[bundles.length] = [q];
 		} else {
@@ -167,7 +167,7 @@ function bundleQuestions(client, questions, callback) {
 			client.once('data', function(respAnswers) {
 				// make sure we got JSON back
 				try {
-					respAnswers = JSON.parse(respAnswers);	
+					respAnswers = JSON.parse(respAnswers);
 				} catch (e) {
 					client.write(JSON.stringify({
 						type: 'error',
@@ -197,7 +197,7 @@ function bundleQuestions(client, questions, callback) {
 						}
 					}
 
-					// filter the answer 
+					// filter the answer
 					if (isFunction(q.filter)) {
 						answer = q.filter(answer);
 					}
@@ -219,7 +219,7 @@ function bundleQuestions(client, questions, callback) {
 function processResponse(resp) {
 	// make sure we got JSON back
 	try {
-		answer = JSON.parse(answer);	
+		answer = JSON.parse(answer);
 	} catch (e) {
 		client.write(JSON.stringify({
 			type: 'error',
