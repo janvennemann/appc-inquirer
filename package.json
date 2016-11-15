@@ -1,10 +1,10 @@
 {
   "name": "appc-inquirer",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "node.js prompt module for asking the same questions different ways",
   "main": "appc-inquirer.js",
   "files": [
-    "appc-inquirer.js", 
+    "appc-inquirer.js",
     "LICENSE"
   ],
   "scripts": {
@@ -28,21 +28,18 @@
   ],
   "author": "Tony Lukasavage",
   "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/appcelerator/appc-inquirer/issues"
-  },
   "homepage": "https://github.com/appcelerator/appc-inquirer",
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13",
-    "grunt-appc-js": "~1.0.14",
-    "grunt-kahvesi": "~0.2.4",
-    "grunt-mocha-test": "^0.12.1",
-    "lodash": "^3.1.0",
-    "should": "^7.0.2"
+    "grunt-appc-js": "~1.0.23",
+    "grunt-kahvesi": "^1.0.2",
+    "grunt-mocha-test": "^0.13.2",
+    "lodash": "^4.17.0",
+    "mocha": "^3.1.2",
+    "should": "^11.1.1"
   },
   "dependencies": {
-    "async": "^1.4.0",
-    "inquirer": "^0.9.0"
+    "async": "^2.1.2",
+    "inquirer": "^1.2.3"
   }
 }

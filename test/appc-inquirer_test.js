@@ -53,7 +53,7 @@ describe('appc-inquirer', function () {
 		inquirer.prompt.should.be.a.Function;
 	});
 
-	it.skip('gets user input via command line', function (done) {
+	it('gets user input via command line', function (done) {
 		var val = 'workit';
 		inquirer.prompt([BASIC], function (err, answers) {
 			should.not.exist(err);
