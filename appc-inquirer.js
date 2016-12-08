@@ -4,7 +4,7 @@ var async = require('async'),
 
 module.exports = new AppcInquirer();
 
-function AppcInquirer() {};
+function AppcInquirer() {}
 
 AppcInquirer.prototype.prompt = function prompt(questions, opts, callback) {
 	callback = arguments[arguments.length-1];
@@ -17,11 +17,19 @@ AppcInquirer.prototype.prompt = function prompt(questions, opts, callback) {
 
 	// have inquirer handle questions via stdio
 	else {
-		return inquirer.prompt(questions).then(function(answers) {
-			return callback(null, answers);
+		var promise = inquirer.prompt(questions);
+		promise.then(function(answers) {
+			// inquirer filters answers from the parameter for questions that where
+			// not actually asked due to ther when function returning false. But we
+			// can still get the unfiltered answers directly from the ui reference
+			// set on the promise.
+			return callback(null, promise.ui.answers);
+		}).catch(function(error) {
+			return callback(error);
 		});
+		return promise.ui;
 	}
-}
+};
 
 function SocketPrompt(opts) {
 	this.host = opts.host || '127.0.0.1';
